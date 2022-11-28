@@ -158,7 +158,30 @@ def pregunta_06():
     ]
 
     """
-    return
+    strings = []
+    valores = []
+
+    with open('data.csv') as csv_file:
+        datos = csv.reader(csv_file, delimiter='	')
+        for fila in datos:
+            dicti = fila[4].split(',')
+
+            for e in dicti: 
+                cadena = e.split(':')[0]
+                valor = e.split(':')[1]
+
+                if cadena not in strings:
+                    strings.append(cadena)
+                    valores.append([int(valor)])
+                else:
+                    valores[strings.index(cadena)].append(int(valor))
+
+    salida = []
+
+    for cadena in sorted(strings):
+        output.append((cadena, min(valores[strings.index(cadena)]), max(valores[strings.index(cadena)])))
+
+    return output
 
 
 def pregunta_07():
@@ -182,7 +205,14 @@ def pregunta_07():
     ]
 
     """
-    return
+    file = open("data.csv", "r")
+    ingress = [(int(line[2]), line[0]) for line in file]
+    file.close()
+    values = set([tupla[0] for tupla in ingress])
+    ans = []
+    for value in values:
+        ans.append((value, [tupla[1] for tupla in ingress if tupla[0] == value]))
+    return sorted(ans)
 
 
 def pregunta_08():
@@ -207,7 +237,24 @@ def pregunta_08():
     ]
 
     """
-    return
+    nums = []
+    l = []
+
+    with open('data.csv') as csv_file:
+        datos = csv.reader(csv_file, delimiter='	')
+        for fila in datos:
+            if int(fila[1]) not in nums:
+                nums.append(int(fila[1]))
+                l.append({fila[0]})
+            else:
+                l[nums.index(int(fila[1]))].add(fila[0])
+
+    output = []
+
+    for numero in sorted(nums):
+        output.append((numero, list(sorted(l[nums.index(numero)]))))
+
+    return output
 
 
 def pregunta_09():
@@ -230,7 +277,21 @@ def pregunta_09():
     }
 
     """
-    return
+    file = open("data.csv", "r")
+    ingress = [line.split(",")[1:] for line in file]
+    file.close()
+    ingressDict = []
+    for lista in ingress:
+        for entrada in lista:
+            if len(entrada) > 1:
+                sublist = entrada.strip().split("\t")
+                if len(sublist) > 1:
+                    ingressDict.append(sublist[1][:3])
+                    continue
+                ingressDict.append(sublist[0][:3])
+    ans = {key:ingressDict.count(key) for key in ingressDict}
+
+    return ans
 
 
 def pregunta_10():
@@ -251,7 +312,17 @@ def pregunta_10():
 
 
     """
-    return
+    f = open("data.csv", "r")
+    entradas = [line.split("\t") for line in f]
+    f.close()
+    resultado = []
+    for entrada in entradas:
+        letra = entrada[0]
+        columna4 = entrada[3].split(",")
+        columna5 = ",".join(entrada[4:]).split(",")
+        resultado.append((letra, len(columna4), len(columna5)))
+
+    return resultado
 
 
 def pregunta_11():
@@ -272,7 +343,17 @@ def pregunta_11():
 
 
     """
-    return
+    letras = {}
+    with open('data.csv') as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter='	')
+        for row in csv_reader:
+            for letra in row[3].split(","):
+                if(not letra in letras.keys()):
+                    letras.update({letra: int(row[1])})
+                else:
+                    letras[letra] += int(row[1])
+    dicc = sorted(letras.items())
+    return dict(dicc)
 
 
 def pregunta_12():
@@ -290,4 +371,16 @@ def pregunta_12():
     }
 
     """
-    return
+    letras = {}
+    with open('data.csv') as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter='	')
+        for row in csv_reader:
+            letra = row[0]
+            for codigo in row[4].split(","):
+                numero = int(codigo.split(":")[1])
+                if(not letra in letras.keys()):
+                    letras.update({letra: numero})
+                else:
+                    letras[letra] += numero
+    dicc = sorted(letras.items())
+    return dict(dicc)
