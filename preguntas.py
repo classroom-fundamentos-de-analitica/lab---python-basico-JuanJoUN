@@ -162,7 +162,7 @@ def pregunta_06():
 
     """
     strings = []
-    valores = []
+    values = []
 
     with open('data.csv') as csv_file:
         datos = csv.reader(csv_file, delimiter='	')
@@ -175,14 +175,14 @@ def pregunta_06():
 
                 if cadena not in strings:
                     strings.append(cadena)
-                    valores.append([int(valor)])
+                    values.append([int(valor)])
                 else:
-                    valores[strings.index(cadena)].append(int(valor))
+                    values[strings.index(cadena)].append(int(valor))
 
-    salida = []
+    output = []
 
     for cadena in sorted(strings):
-        output.append((cadena, min(valores[strings.index(cadena)]), max(valores[strings.index(cadena)])))
+        output.append((cadena, min(values[strings.index(cadena)]), max(values[strings.index(cadena)])))
 
     return output
 
