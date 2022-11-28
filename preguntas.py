@@ -42,7 +42,11 @@ def pregunta_02():
     ]
 
     """
-    return
+    file = open("data.csv", "r")
+    l = [line[0] for line in file]
+    r = sorted((letra, l.count(letra)) for letra in set(l))
+
+    return r
 
 
 def pregunta_03():
@@ -60,7 +64,17 @@ def pregunta_03():
     ]
 
     """
-    return
+    file = open("data.csv", "r")
+    values = [(line[0], line[2]) for line in file]
+    file.close()
+    result = {}
+    for letra, num in values:
+        if letra not in result:
+            result[letra] = int(num)
+            continue
+        result[letra] += int(num)
+
+    return sorted((key, value) for key, value in result.items())
 
 
 def pregunta_04():
@@ -85,7 +99,12 @@ def pregunta_04():
     ]
 
     """
-    return
+    file = open("data.csv", "r")
+    meses = [line[9:11] for line in f]
+    file.close()
+    result = sorted((mes, meses.count(mes)) for mes in set(meses))
+
+    return result
 
 
 def pregunta_05():
@@ -103,7 +122,18 @@ def pregunta_05():
     ]
 
     """
-    return
+    file = open("data.csv", "r")
+    ingress = [(line[0], int(line[2])) for line in f]
+    file.close()
+    l = set([entrada[0] for entrada in entradas])
+    result = []
+    for letra in l:
+        lIngress = []
+        for ent in ingress:
+            if ent[0] == letra:
+                lIngress.append(ent[1])
+        result.append((letra, max(lIngress), min(lIngress)))
+    return sorted(result)
 
 
 def pregunta_06():
