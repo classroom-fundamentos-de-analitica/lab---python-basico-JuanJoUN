@@ -21,7 +21,10 @@ def pregunta_01():
     214
 
     """
-    return
+    file = open("data.csv", "r")
+    values = [int(line[2]) for line in file]
+    file.close()
+    return sum(values)
 
 
 def pregunta_02():
