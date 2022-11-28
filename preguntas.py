@@ -100,7 +100,7 @@ def pregunta_04():
 
     """
     file = open("data.csv", "r")
-    meses = [line[9:11] for line in f]
+    meses = [line[9:11] for line in file]
     file.close()
     result = sorted((mes, meses.count(mes)) for mes in set(meses))
 
@@ -123,9 +123,9 @@ def pregunta_05():
 
     """
     file = open("data.csv", "r")
-    ingress = [(line[0], int(line[2])) for line in f]
+    ingress = [(line[0], int(line[2])) for line in file]
     file.close()
-    l = set([entrada[0] for entrada in entradas])
+    l = set([ent[0] for ent in ingress])
     result = []
     for letra in l:
         lIngress = []
